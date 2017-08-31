@@ -1,0 +1,15 @@
+Layout/EmptyLineAfterMagicComment:
+  Enabled: false
+
+AllCops:
+  TargetRubyVersion: '2.4.1'
+Metrics/BlockLength:
+  Enabled: false
+Metrics/MethodLength:
+  Max: 20
+Style/TrailingCommaInArguments:
+  Enabled: false
+Style/TrailingCommaInLiteral:
+  Enabled: false
+Metrics/LineLength:
+  Max: 78
