@@ -1,56 +1,57 @@
-# @markup markdown
-# EsTractor: Simplified data extracton from Elasticsearch
+= EsTractor: Simplified data extracton from Elasticsearch
 
-[[Home]](https://github.com/utilum/es_tractor)
+home :: https://github.com/utilum/es_tractor
+bugs :: https://github.com/utilum/es_tractor/issues
+rdoc :: http://www.rubydoc.info/gems/es_tractor
 
-## DESCRIPTION:
+== DESCRIPTION:
 
-Sub-set of Search APIs with DRY query building.
+es_tractor provides a reduced, simplified and more DRY search API to
+Elasticsearch. It aims to facilitate data extraction and preparation
+without server scripting.
 
-## FEATURES/PROBLEMS:
+== FEATURES/PROBLEMS:
 
-- Subset of Search APIs: count, search.
-- Minimal DRY query builder maps root elements of a Hash argument into boolean
+* Subset of Search APIs: count, search.
+* Minimal DRY query builder maps root elements of a Hash argument into boolean
   filters.
 
-- TODO:
-  - Add Search APIs:
-      - Fields
-      - Sort
-      - Scroll
-  - Aggregations
-  - Report formats: CSV, JSON.
-  - Extraction: Aggregation to flat records (separate project?).
+* TODO:
+  * Aggregations
+  * Add Search APIs:
+    * Fields
+    * Sort
+    * Scroll
+  * Report formats: CSV, JSON.
+  * Extraction: Aggregation to flat records (separate project?).
 
-## SYNOPSIS:
+== SYNOPSIS:
 
-```
-include EsTractor
-tractor = Client.new
+  include EsTractor
+  tractor = Client.new
 
-tractor.count
-  # => (Integer) number of documents on the server
+  tractor.count
+    # => (Integer) number of documents on the server
 
-tractor.count(term: { my_field: 'my precise term' })
-  # => (Integer) number of documents where my_field == 'my precise term'
-```
+  tractor.count(term: { my_field: 'my precise term' })
+    # => (Integer) number of documents where my_field == 'my precise term'
 
-## REQUIREMENTS:
+== REQUIREMENTS:
 
 Some environment variables are expected:
-- L2B_ELASTICSEARCH_HOST
-- L2B_ELASTICSEARCH_INDEX
+* ES_TRACTOR_ELASTICSEARCH_HOST
+* ES_TRACTOR_ELASTICSEARCH_INDEX
 
-## DEVELOPERS:
+== DEVELOPERS:
 
 After checking out the source, run:
 
   $ rake newb
 
-This task will install any missing dependencies, run the tests/specs,
-and generate the RDoc.
+This task will install any missing dependencies, run the tests, and
+generate the RDoc.
 
-## LICENSE:
+== LICENSE:
 
 (The MIT License)
 

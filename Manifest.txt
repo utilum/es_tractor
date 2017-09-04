@@ -1,8 +1,8 @@
 .autotest
 .rubocop.yml
-History.txt
+History.rdoc
 Manifest.txt
-README.txt
+README.rdoc
 Rakefile
 bin/console
 lib/es_tractor.rb

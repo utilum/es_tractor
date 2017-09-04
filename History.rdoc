@@ -1,0 +1,19 @@
+=== 0.0.3 / 2017-09-05
+
+* A few minor enhancements
+
+  * Documentation cleanup: remove markdown
+  * History catchup
+
+=== 0.0.2 / 2017-09-04
+
+* 1 mintor enhancement
+
+  * Version bump
+
+=== 0.0.1 / 2017-08-31
+
+* 1 major enhancement
+
+  * Birthday!
+
