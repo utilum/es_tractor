@@ -112,6 +112,20 @@ module EsTractor
 
         @tractor.send(action, opts)
       end
+
+      define_method "test_#{action}_with_query_string" do
+        opts = { query_string: 'My query string' }
+        exp[:body] = { query: {
+          bool: {
+            must: [query_string: { query: 'My query string' }],
+            filter: [],
+          },
+        } }
+
+        @tractor.client.expects(action).with(exp)
+
+        @tractor.send(action, opts)
+      end
     end
   end
 end

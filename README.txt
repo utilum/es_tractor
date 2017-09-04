@@ -10,12 +10,11 @@ Sub-set of Search APIs with DRY query building.
 ## FEATURES/PROBLEMS:
 
 - Subset of Search APIs: count, search.
-- DRY query builder maps root elements of a Hash argument into boolean
+- Minimal DRY query builder maps root elements of a Hash argument into boolean
   filters.
 
 - TODO:
   - Add Search APIs:
-      - Query string
       - Fields
       - Sort
       - Scroll

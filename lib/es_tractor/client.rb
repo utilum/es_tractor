@@ -32,11 +32,13 @@ module EsTractor
     #   One or more field names, translated into filter boolean.
     # @option opts [Hash, Array<Hash>] :match
     #   One or more field: match pairs, translated into must boolean.
-    # @option opts [Hash, Array<Hash>] :term
-    #   One or more field: term pairs, translated into a filter boolean.
+    # @option opts [String] :query_string
+    #   Translated into must boolean.
     # @option opts [Hash<Array>] :range
     #   A hash keyed on a field name, containing an array: [min, max],
-    #   translated into a filter boolean.
+    #   translated into filter boolean.
+    # @option opts [Hash, Array<Hash>] :term
+    #   One or more field: term pairs, translated into filter boolean.
     #
     # @example
     #   opts = {
@@ -67,8 +69,8 @@ module EsTractor
     #       },
     #     }
     def count(opts = {})
-      body = body(opts)
-      @client.count(body: body)
+      args = { body: body(opts) }
+      @client.count(args)
     end
 
     # @return [Hash] with the actual result in the 'hits'['hits'] key.
@@ -99,20 +101,21 @@ module EsTractor
     end
 
     def body(opts = {})
-      {
-        query: query(opts),
-      }
+      { query: query(opts) }
     end
 
     def query(opts = {})
       bool = { filter: [], must: [] }
 
-      (%i[exists match range term] & opts.keys).each do |qualifier|
+      (%i[exists match query_string range term] & opts.keys)
+        .each do |qualifier|
         case qualifier
         when :exists
           bool[:filter].push(exists: { field: opts[qualifier] })
         when :match
           bool[:must] += array_or_hash(qualifier, opts[:match])
+        when :query_string
+          bool[:must].push(query_string: { query: opts[:query_string] })
         when :range
           bool[:filter].push(range: range(opts[:range]))
         when :term
