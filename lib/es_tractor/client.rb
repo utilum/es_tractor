@@ -28,18 +28,24 @@ module EsTractor
     # Count documents, filtered by options.
     # @return [Hash] with the result in the 'count' key.
     # @param [Hash] opts with the following keys:
+    # @option opts [String, Array<String>] :exists
+    #   One or more field names, translated into filter boolean.
     # @option opts [Hash, Array<Hash>] :match
     #   One or more field: match pairs, translated into must boolean.
     # @option opts [Hash, Array<Hash>] :term
     #   One or more field: term pairs, translated into a filter boolean.
+    # @option opts [Hash<Array>] :range
+    #   A hash keyed on a field name, containing an array: [min, max],
+    #   translated into a filter boolean.
     #
     # @example
     #   opts = {
     #     match: { color: 'strawberry black' },
+    #     exists: ['flavor', 'spicy'],
     #     term: [
     #       { flavor: 'vanilla' },
     #       { spicy: 3 },
-    #     ]
+    #     ],
     #   }
     #
     #   Client.new.count(opts) # => { 'count' => 7 }
@@ -99,10 +105,29 @@ module EsTractor
     end
 
     def query(opts = {})
+      bool = { filter: [], must: [] }
+
+      (%i[exists match range term] & opts.keys).each do |qualifier|
+        case qualifier
+        when :exists
+          bool[:filter].push(exists: { field: opts[qualifier] })
+        when :match
+          bool[:must] += array_or_hash(qualifier, opts[:match])
+        when :range
+          bool[:filter].push(range: range(opts[:range]))
+        when :term
+          bool[:filter] += array_or_hash(qualifier, opts[:term])
+        end
+      end
+
+      { bool: bool }
+    end
+
+    def range(range_opt)
       {
-        bool: {
-          must: array_or_hash(:match, opts[:match]),
-          filter: array_or_hash(:term, opts[:term]),
+        range_opt.keys.first => {
+          gte: range_opt.values.first.first,
+          lte: range_opt.values.first.last,
         },
       }
     end

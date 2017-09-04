@@ -10,15 +10,15 @@ Sub-set of Search APIs with DRY query building.
 ## FEATURES/PROBLEMS:
 
 - Subset of Search APIs: count, search.
-- DRY query builder for simpler shorter code.
+- DRY query builder maps root elements of a Hash argument into boolean
+  filters.
 
 - TODO:
   - Add Search APIs:
-      - Range
-      - Exists
+      - Query string
       - Fields
-      - Scroll
       - Sort
+      - Scroll
   - Aggregations
   - Report formats: CSV, JSON.
   - Extraction: Aggregation to flat records (separate project?).

@@ -3,6 +3,8 @@ Layout/EmptyLineAfterMagicComment:
 
 AllCops:
   TargetRubyVersion: '2.4.1'
+Metrics/AbcSize:
+  Max: 20
 Metrics/BlockLength:
   Enabled: false
 Metrics/MethodLength:

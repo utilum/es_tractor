@@ -53,6 +53,65 @@ module EsTractor
 
         @tractor.send(action, opts)
       end
+
+      define_method "test_#{action}_with_range_hash" do
+        min = 1
+        max = 2
+        opts = { range: { my_field: [min, max] } }
+        exp[:body] = { query: {
+          bool: {
+            must: [],
+            filter: [
+              range: {
+                my_field: {
+                  gte: min,
+                  lte: max,
+                },
+              },
+            ],
+          },
+        } }
+
+        @tractor.client.expects(action).with(exp)
+
+        @tractor.send(action, opts)
+      end
+
+      define_method "test_#{action}_with_exists_fieldname_value" do
+        opts = { exists: 'my_field' }
+        exp[:body] = { query: {
+          bool: {
+            must: [],
+            filter: [
+              { exists: { field: 'my_field' } },
+            ],
+          },
+        } }
+
+        @tractor.client.expects(action).with(exp)
+
+        @tractor.send(action, opts)
+      end
+
+      define_method "test_#{action}_with_exists_fieldname_array" do
+        opts = { exists: %w[my_field my_other_field] }
+        exp[:body] = { query: {
+          bool: {
+            must: [],
+            filter: [
+              {
+                exists: {
+                  field: %w[my_field my_other_field],
+                },
+              },
+            ],
+          },
+        } }
+
+        @tractor.client.expects(action).with(exp)
+
+        @tractor.send(action, opts)
+      end
     end
   end
 end
