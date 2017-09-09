@@ -126,6 +126,39 @@ module EsTractor
 
         @tractor.send(action, opts)
       end
+
+      next unless action == 'search'
+
+      %i[avg cardinality extended_stats geo_bounds geo_centroid max min 
+         percentiles stats sum value_count].each do |aggregation|
+        define_method "test_search_with_#{aggregation}_agg" do
+          opts = {
+            query_string: 'My query string',
+            aggregation => 'grade',
+          }
+          exp = {
+            from: 0,
+            size: 0,
+            body: {
+              query: {
+                bool: {
+                  must: [query_string: { query: 'My query string' }],
+                  filter: [],
+                },
+              },
+              aggs: {
+                "#{aggregation}-grade".to_sym => {
+                  aggregation => { field: 'grade' }
+                },
+              },
+            },
+          }
+
+          @tractor.client.expects(:search).with(exp)
+
+          @tractor.search opts
+        end
+      end
     end
   end
 end

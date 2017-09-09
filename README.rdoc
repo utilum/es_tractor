@@ -13,11 +13,15 @@ without server scripting.
 == FEATURES/PROBLEMS:
 
 * Subset of Search APIs: count, search.
+* Most metrics aggregations without optional parameters
 * Minimal DRY query builder maps root elements of a Hash argument into boolean
   filters.
 
 * TODO:
-  * Aggregations
+  * Aggregations: 
+    * Bucket
+    * Nesting
+    * Optional parameters
   * Add Search APIs:
     * Fields
     * Sort
@@ -35,6 +39,29 @@ without server scripting.
 
   tractor.count(term: { my_field: 'my precise term' })
     # => (Integer) number of documents where my_field == 'my precise term'
+
+  tractor.search(size: 1, term: { my_field: 'my precise term' })
+    # => 
+    # {
+    #   "took"=>29,
+    #   "timed_out"=>false,
+    #   "_shards"=>{"total"=>542, "successful"=>542, "failed"=>0},
+    #   "hits"=> {
+    #     "total"=>279271,
+    #     "max_score"=>0.0,
+    #     "hits"=> [
+    #       {
+    #         "_index"=>"my_index",
+    #         "_id"=>"bc596ff2-955b-11e7-a7d2-001ed3f963a9",
+    #         "_score"=>1.6272357,
+    #         "_source"=> {
+    #           "my_field"=>"my precise term",
+    #           "timestamp"=>"2017-09-09 12:38:09.263",
+    #         },
+    #       },
+    #     ],
+    #   },
+    # }
 
 == REQUIREMENTS:
 

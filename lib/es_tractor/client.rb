@@ -89,6 +89,28 @@ module EsTractor
 
     private
 
+    def supported_aggs
+      metrics_aggs
+    end
+
+    def metrics_aggs
+      %i[avg cardinality extended_stats geo_bounds geo_centroid max min
+        percentiles stats sum value_count]
+    end
+
+    def aggs(opts)
+      aggregations = {}
+      (supported_aggs & opts.keys).each do |aggregation|
+        if metrics_aggs.include?(aggregation)
+          name = [aggregation, opts[aggregation]].join('-').to_sym
+          aggregations[name] = {
+            aggregation => { field: opts[aggregation] }
+          }
+        end
+      end
+      aggregations
+    end
+
     def array_or_hash(name, filter)
       case filter
       when Array
@@ -101,7 +123,9 @@ module EsTractor
     end
 
     def body(opts = {})
-      { query: query(opts) }
+      body = { query: query(opts) }
+      body[:aggs] = aggs(opts) if (supported_aggs & opts.keys).any?
+      body
     end
 
     def query(opts = {})
