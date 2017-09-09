@@ -11,6 +11,7 @@ Hoe.spec 'es_tractor' do
 
   license 'MIT'
 
+  require_ruby_version '~> 2.0'
   extra_deps << ['elasticsearch', '~> 5.0', '>= 5.0.4']
 
   extra_dev_deps << ['hoe-yard', '~> 0.1', '>=0.1.3']
