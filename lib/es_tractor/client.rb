@@ -73,11 +73,33 @@ module EsTractor
       @client.count(args)
     end
 
-    # @return [Hash] with the actual result in the 'hits'['hits'] key.
+    # @return [Hash] with the actual results in the 'hits'['hits'] key.
     # @param (see #count)
     # @option (see #count)
     # @option opts [Integer] :from
     # @option opts [Integer] :size
+    # @option opts [String] :avg
+    #   Field name on which to apply the avg aggregation
+    # @option opts [String] :cardinality
+    #   Field name on which to apply the cardinality aggregation
+    # @option opts [String] :extended_stats
+    #   Field name on which to apply the extended_stats aggregation
+    # @option opts [String] :geo_bounds
+    #   Field name on which to apply the geo_bounds aggregation
+    # @option opts [String] :geo_centroid
+    #   Field name on which to apply the geo_centroid aggregation
+    # @option opts [String] :max
+    #   Field name on which to apply the max aggregation
+    # @option opts [String] :min
+    #   Field name on which to apply the min aggregation
+    # @option opts [String] :percentiles
+    #   Field name on which to apply the percentiles aggregation
+    # @option opts [String] :stats
+    #   Field name on which to apply the stats aggregation
+    # @option opts [String] :sum
+    #   Field name on which to apply the sum aggregation
+    # @option opts [String] :value_count
+    #   Field name on which to apply the value_count aggregation
     def search(opts)
       args = {
         from: opts[:from] ? opts[:from] : 0,
