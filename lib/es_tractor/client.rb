@@ -42,38 +42,76 @@ module EsTractor
     #
     # @example
     #   opts = {
-    #     match: { color: 'strawberry black' },
-    #     exists: ['flavor', 'spicy'],
+    #     match: { topping: 'fudge' },
+    #     exists: ['address', 'phone'],
     #     term: [
     #       { flavor: 'vanilla' },
-    #       { spicy: 3 },
+    #       { scoops: 3 },
     #     ],
     #   }
     #
     #   Client.new.count(opts) # => { 'count' => 7 }
     #
     #   # Tranforms opts into the following hash, passed to Elasticsearch:
-    #     {
-    #       body:  {
-    #         query: {
-    #           bool: {
-    #             must: {
-    #               match: { flavor: 'vanilla' },
-    #             },
-    #             filter: [
-    #               { term: { flavor: 'vanilla' } },
-    #               { term: { spicy: 3 } },
-    #             ],
-    #           },
-    #         },
-    #       },
+    #   {
+    #     "query": {
+    #       "bool": {
+    #         "filter": [
+    #           { "exists": { "field": ["address", "phone"] } },
+    #           { "term": { "flavor": "vanilla" } },
+    #           { "term":{ "scoops": 3 } }
+    #         ],
+    #         "must": [
+    #           { "match": { "topping": "fudge" } }
+    #         ]
+    #       }
     #     }
+    #   }
     def count(opts = {})
       args = { body: body(opts) }
       @client.count(args)
     end
 
-    # @return [Hash] with the actual results in the 'hits'['hits'] key.
+    # Search documents, filtered by options, aggregate on special
+    # aggregations keys.
+    #
+    # Supported aggregations (avg, cardinality, extended_stats, geo_bounds,
+    # geo_centroid, max min, percentiles, stats, sum, value_count) take 
+    # a field name and are automatically named.
+    # @example
+    #   opts = {
+    #     query_string: 'flavor:vanilla AND cone:true',
+    #     avg: "scoops",
+    #   }
+    #
+    #   Client.new.search(opts)
+    #
+    #   # Tranforms opts into the following hash, passed to Elasticsearch:
+    #   {
+    #     "query": {
+    #       "bool": {
+    #         "filter":[],
+    #         "must":[
+    #           {
+    #             "query_string": {
+    #               "query":"flavor:vanilla AND cone:true"
+    #             }
+    #           }
+    #         ]
+    #       }
+    #     },
+    #     "aggs": {
+    #       "avg-intelligence": {
+    #         "avg": {
+    #           "field":"scoops"
+    #         }
+    #       }
+    #     }
+    #   }
+    #
+    # @return [Hash] with the actual results in the <tt>'hits'['hits']</tt>
+    #   key.
+    #
     # @param (see #count)
     # @option (see #count)
     # @option opts [Integer] :from
