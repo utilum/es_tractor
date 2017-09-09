@@ -7,19 +7,45 @@ rdoc :: http://www.rubydoc.info/gems/es_tractor
 
 == DESCRIPTION:
 
-es_tractor provides a reduced, simplified and more DRY search API to
-Elasticsearch. It aims to facilitate data extraction and preparation
-without server scripting.
+Minimal, simple, DRY DSL for searching Elasticsearch.
+
+Takes one shallow hash argument and translates it to an elaborate one passed
+on to elasticsearch-api. The price: narrower options. The gain: succinctness.
+For example, a root <tt>:range</tt> is always a boolean filter and always 
+includes the edges:
+
+  tractor = Client.new
+  opts = { range: { timestamp: ['now-5m', 'now'] } }
+
+  tractor.search(opts) # => sends the following to Ealsticsearch:
+  {
+    "query": {
+      "bool": {
+        "filter": [
+          {
+            "range": {
+              "timestamp": {
+                "gte":"now-5m",
+                "lte":"now"
+              }
+            }
+          }
+        ],
+        "must": [],
+      }
+    }
+  }
+
 
 == FEATURES/PROBLEMS:
 
 * Subset of Search APIs: count, search, aggregations.
 * Supports most metrics aggregations without optional parameters.
-* Minimal DRY query builder maps root elements of a Hash argument into boolean
+* Query builder translates a simplified Hash argument into boolean
   filters and aggregations.
 
 * TODO:
-  * Aggregations: 
+  * Aggregations:
     * Bucket
     * Nesting
     * Optional parameters
@@ -27,7 +53,6 @@ without server scripting.
     * Fields
     * Sort
     * Scroll
-  * Report formats: CSV, JSON.
   * Extraction: Aggregation to flat records (separate project?).
 
 == SYNOPSIS:
@@ -42,7 +67,7 @@ without server scripting.
     # => (Integer) number of documents where my_field == 'my precise term'
 
   tractor = Client.new true
-  tractor.search(size: 1, term: { my_field: 'my precise term' }) # => 
+  tractor.search(size: 1, term: { my_field: 'my precise term' }) # =>
   {
     "took"=>29,
     "timed_out"=>false,
@@ -66,6 +91,8 @@ without server scripting.
 
 == REQUIREMENTS:
 
+* Ruby 2.0+
+
 Some environment variables are expected:
 * ES_TRACTOR_ELASTICSEARCH_HOST
 * ES_TRACTOR_ELASTICSEARCH_INDEX
@@ -75,7 +102,7 @@ Some environment variables are expected:
   $ gem install es_tractor
 
 Or in your Gemfile:
-  gem 'es_tractor', '~> 0.0.3'
+  gem 'es_tractor'
 
 == DEVELOPERS:
 
@@ -90,7 +117,7 @@ generate the RDoc.
 
 (The MIT License)
 
-Copyright (c) 2017 FIX
+Copyright (c) 2017 Oz Shelach
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

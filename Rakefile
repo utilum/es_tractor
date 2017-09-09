@@ -7,7 +7,7 @@ require 'hoe'
 Hoe.plugin :yard
 
 Hoe.spec 'es_tractor' do
-  developer('utilum', 'oz@utilum.com')
+  developer('Oz Shelach', 'oz@utilum.com')
 
   license 'MIT'
 
