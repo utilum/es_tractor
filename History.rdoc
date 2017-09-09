@@ -1,8 +1,10 @@
-=== 0.0.3 / 2017-09-05
+=== 0.0.3 / 2017-09-09
 
-* A few minor enhancements
+* A few enhancements
 
-  * Documentation cleanup: remove markdown
+  * Add most metrics aggregations
+  * Specify min Ruby version
+  * Documentation cleanup
   * History catchup
 
 === 0.0.2 / 2017-09-04
