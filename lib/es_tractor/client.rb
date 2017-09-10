@@ -76,7 +76,7 @@ module EsTractor
     # aggregations keys.
     #
     # Supported aggregations (avg, cardinality, extended_stats, geo_bounds,
-    # geo_centroid, max min, percentiles, stats, sum, value_count) take 
+    # geo_centroid, max min, percentiles, stats, sum, value_count) take
     # a field name and are automatically named.
     # @example
     #   opts = {
@@ -154,19 +154,17 @@ module EsTractor
     end
 
     def metrics_aggs
-      %i[avg cardinality extended_stats geo_bounds geo_centroid max min
-        percentiles stats sum value_count]
+      %i[ avg cardinality extended_stats geo_bounds geo_centroid max min
+          percentiles stats sum value_count]
     end
 
     def aggs(opts)
       aggregations = {}
       (supported_aggs & opts.keys).each do |aggregation|
-        if metrics_aggs.include?(aggregation)
-          name = [aggregation, opts[aggregation]].join('-').to_sym
-          aggregations[name] = {
-            aggregation => { field: opts[aggregation] }
-          }
-        end
+        name = [aggregation, opts[aggregation]].join('-').to_sym
+        aggregations[name] = {
+          aggregation => { field: opts[aggregation] }
+        }
       end
       aggregations
     end
