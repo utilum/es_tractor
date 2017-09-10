@@ -129,8 +129,10 @@ module EsTractor
 
       next unless action == 'search'
 
-      %i[avg cardinality extended_stats geo_bounds geo_centroid max min 
-         percentiles stats sum value_count].each do |aggregation|
+      %i[
+        avg cardinality extended_stats geo_bounds geo_centroid max min
+        percentiles stats sum value_count
+      ].each do |aggregation|
         define_method "test_search_with_#{aggregation}_agg" do
           opts = {
             query_string: 'My query string',
