@@ -29,9 +29,9 @@ namespace :es_tractor do
   namespace :demo do
     desc 'Count all docuements since forever'
     task :count_all do
-      tractor = Client.new
+      tractor = Client.new true
       r = tractor.count
-      puts "Found #{r} documents"
+      puts "Found #{r['count']} documents"
     end
   end
 end
