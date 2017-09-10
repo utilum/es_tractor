@@ -1,8 +1,5 @@
-Layout/EmptyLineAfterMagicComment:
-  Enabled: false
-
 AllCops:
-  TargetRubyVersion: '2.4.1'
+  TargetRubyVersion: 2.4
 Metrics/AbcSize:
   Max: 20
 Metrics/BlockLength:
