@@ -9,7 +9,4 @@ include EsTractor
 begin
   require 'pry'
   Pry.start
-rescue LoadError
-  require 'irb'
-  IRB.start
 end
