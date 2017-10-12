@@ -182,6 +182,8 @@ module EsTractor
 
     def body(opts = {})
       body = { query: query(opts) }
+      body[:fields] = opts[:fields] if opts[:fields]
+      body[:sort] = opts[:sort] if opts[:sort]
       body[:aggs] = aggs(opts) if (supported_aggs & opts.keys).any?
       body
     end
