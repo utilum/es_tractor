@@ -7,7 +7,7 @@ module EsTractor
       @tractor = Client.new
     end
 
-    %w[count search].each do |action|
+    %w(count search).each do |action|
       exp = action == 'search' ? { from: 0, size: 0 } : {}
 
       define_method "test_#{action}_with_term_hash" do
@@ -94,14 +94,14 @@ module EsTractor
       end
 
       define_method "test_#{action}_with_exists_fieldname_array" do
-        opts = { exists: %w[my_field my_other_field] }
+        opts = { exists: %w(my_field my_other_field) }
         exp[:body] = { query: {
           bool: {
             must: [],
             filter: [
               {
                 exists: {
-                  field: %w[my_field my_other_field],
+                  field: %w(my_field my_other_field),
                 },
               },
             ],
@@ -129,10 +129,10 @@ module EsTractor
 
       next unless action == 'search'
 
-      %i[
+      %i(
         avg cardinality extended_stats geo_bounds geo_centroid max min
         percentiles stats sum value_count
-      ].each do |aggregation|
+      ).each do |aggregation|
         define_method "test_search_with_#{aggregation}_agg" do
           opts = {
             query_string: 'My query string',

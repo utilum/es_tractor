@@ -154,8 +154,8 @@ module EsTractor
     end
 
     def metrics_aggs
-      %i[ avg cardinality extended_stats geo_bounds geo_centroid max min
-          percentiles stats sum value_count]
+      %i(avg cardinality extended_stats geo_bounds geo_centroid max min
+         percentiles stats sum value_count)
     end
 
     def aggs(opts)
@@ -182,6 +182,8 @@ module EsTractor
 
     def body(opts = {})
       body = { query: query(opts) }
+      body[:fields] = opts[:fields] if opts[:fields]
+      body[:sort] = opts[:sort] if opts[:sort]
       body[:aggs] = aggs(opts) if (supported_aggs & opts.keys).any?
       body
     end
@@ -189,7 +191,7 @@ module EsTractor
     def query(opts = {})
       bool = { filter: [], must: [] }
 
-      (%i[exists match query_string range term] & opts.keys)
+      (%i(exists match query_string range term) & opts.keys)
         .each do |qualifier|
         case qualifier
         when :exists
