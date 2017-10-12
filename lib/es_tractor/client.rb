@@ -154,8 +154,8 @@ module EsTractor
     end
 
     def metrics_aggs
-      %i( avg cardinality extended_stats geo_bounds geo_centroid max min
-          percentiles stats sum value_count)
+      %i(avg cardinality extended_stats geo_bounds geo_centroid max min
+         percentiles stats sum value_count)
     end
 
     def aggs(opts)
