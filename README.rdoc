@@ -39,7 +39,7 @@ includes the edges:
 
 == FEATURES/PROBLEMS:
 
-* Subset of Search APIs: count, search, aggregations.
+* Subset of Search APIs: count, fields, search, sort, aggregations.
 * Supports most metrics aggregations without optional parameters.
 * Query builder translates a simplified Hash argument into boolean
   filters and aggregations.
@@ -50,8 +50,6 @@ includes the edges:
     * Nesting
     * Optional parameters
   * Add Search APIs:
-    * Fields
-    * Sort
     * Scroll
   * Extraction: Aggregation to flat records (separate project?).
 
