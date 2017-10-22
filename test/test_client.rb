@@ -130,6 +130,48 @@ module EsTractor
 
       next unless action == 'search'
 
+      def test_search_with_fields_arg 
+        opts = { fields: [:some_field] }
+        exp = {
+          from: 0,
+          size: 0,
+          body: { 
+            query: {
+              bool: {
+                filter: [],
+                must: [],
+              },
+            },
+            fields: [:some_field]
+          },
+        }
+
+        @tractor.client.expects(:search).with(exp)
+
+        @tractor.search opts
+      end
+
+      def test_search_with_sort_arg 
+        opts = { sort: [:some_field] }
+        exp = {
+          from: 0,
+          size: 0,
+          body: { 
+            query: {
+              bool: {
+                filter: [],
+                must: [],
+              },
+            },
+            sort: [:some_field]
+          },
+        }
+
+        @tractor.client.expects(:search).with(exp)
+
+        @tractor.search opts
+      end
+
       %i[
         avg cardinality extended_stats geo_bounds geo_centroid max min
         percentiles stats sum value_count
