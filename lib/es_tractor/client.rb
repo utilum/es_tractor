@@ -123,6 +123,8 @@ module EsTractor
     #   Field name on which to apply the cardinality aggregation
     # @option opts [String] :extended_stats
     #   Field name on which to apply the extended_stats aggregation
+    # @option opts [Array] :fields
+    #   Field names to return
     # @option opts [String] :geo_bounds
     #   Field name on which to apply the geo_bounds aggregation
     # @option opts [String] :geo_centroid
@@ -133,6 +135,8 @@ module EsTractor
     #   Field name on which to apply the min aggregation
     # @option opts [String] :percentiles
     #   Field name on which to apply the percentiles aggregation
+    # @option opts [Array] :sort
+    #   Contains Hashes keyd on field name
     # @option opts [String] :stats
     #   Field name on which to apply the stats aggregation
     # @option opts [String] :sum
