@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 $LOAD_PATH.unshift File.dirname(__FILE__) + '/es_tractor'
 $LOAD_PATH.unshift File.dirname(__FILE__) \
   unless $LOAD_PATH.include?(File.dirname(__FILE__))
