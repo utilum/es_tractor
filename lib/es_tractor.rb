@@ -10,5 +10,5 @@ require 'client'
 # EsTractor provides tools to query Elasticsearch
 
 module EsTractor
-  VERSION = '0.0.5' # :nodoc:
+  VERSION = '0.0.6' # :nodoc:
 end
