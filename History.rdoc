@@ -1,3 +1,7 @@
+=== 0.0.6 / 2017-10-22
+
+* Doc and test for fields and sort
+
 === 0.0.5 / 2017-10-12
 
 * Add fields and sort
