@@ -155,7 +155,7 @@ module EsTractor
     private
 
     def supported_aggs
-      metrics_aggs
+      metrics_aggs + bucket_aggs
     end
 
     def metrics_aggs
@@ -163,13 +163,27 @@ module EsTractor
          percentiles stats sum value_count]
     end
 
+    def bucket_aggs
+      %i[terms]
+    end
+
     def aggs(opts)
       aggregations = {}
       (supported_aggs & opts.keys).each do |aggregation|
-        name = [aggregation, opts[aggregation]].join('-').to_sym
-        aggregations[name] = {
-          aggregation => { field: opts[aggregation] }
-        }
+        if opts[aggregation].is_a?(String)
+          name = [aggregation, opts[aggregation]].join('-').to_sym
+          aggregations[name] = {
+            aggregation => { field: opts[aggregation] }
+          }
+        elsif opts[aggregation].is_a?(Array)
+          name = [aggregation, opts[aggregation].first].join('-').to_sym
+          aggregations[name] = {
+            aggregation => {
+              field: opts[aggregation].first,
+              size: opts[aggregation].last,
+            }
+          }
+        end
       end
       aggregations
     end

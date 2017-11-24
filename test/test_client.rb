@@ -175,11 +175,11 @@ module EsTractor
       %i[
         avg cardinality extended_stats geo_bounds geo_centroid max min
         percentiles stats sum value_count
-      ].each do |aggregation|
-        define_method "test_search_with_#{aggregation}_agg" do
+      ].each do |metric_aggregation|
+        define_method "test_search_with_#{metric_aggregation}_agg" do
           opts = {
             query_string: 'My query string',
-            aggregation => 'grade',
+            metric_aggregation => 'grade',
           }
           exp = {
             from: 0,
@@ -189,8 +189,63 @@ module EsTractor
                 must: [query_string: { query: 'My query string' }],
                 filter: [],
               }, },
-              aggs: { "#{aggregation}-grade".to_sym => {
-                aggregation => { field: 'grade' }
+              aggs: { "#{metric_aggregation}-grade".to_sym => {
+                metric_aggregation => { field: 'grade' }
+              }, },
+            },
+          }
+
+          @tractor.client.expects(:search).with(exp)
+
+          @tractor.search opts
+        end
+      end
+
+      %i[terms].each do |bucket_aggregation|
+        define_method "test_search_with_#{bucket_aggregation}_agg" do
+          opts = {
+            query_string: 'My query string',
+            bucket_aggregation => 'grade',
+          }
+
+          exp = {
+            from: 0,
+            size: 0,
+            body: {
+              query: { bool: {
+                must: [query_string: { query: 'My query string' }],
+                filter: [],
+              }, },
+              aggs: { "#{bucket_aggregation}-grade".to_sym => {
+                bucket_aggregation => { field: 'grade' }
+              }, },
+            },
+          }
+
+          @tractor.client.expects(:search).with(exp)
+
+          @tractor.search opts
+        end
+
+        define_method "test_search_with_#{bucket_aggregation}_agg_and_size" do
+          opts = {
+            query_string: 'My query string',
+            bucket_aggregation => ['grade', 20],
+          }
+
+          exp = {
+            from: 0,
+            size: 0,
+            body: {
+              query: { bool: {
+                must: [query_string: { query: 'My query string' }],
+                filter: [],
+              }, },
+              aggs: { "#{bucket_aggregation}-grade".to_sym => {
+                bucket_aggregation => { 
+                  field: 'grade',
+                  size: 20,
+                }
               }, },
             },
           }
