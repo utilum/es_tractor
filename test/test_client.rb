@@ -130,12 +130,12 @@ module EsTractor
 
       next unless action == 'search'
 
-      def test_search_with_fields_arg 
+      def test_search_with_fields_arg
         opts = { fields: [:some_field] }
         exp = {
           from: 0,
           size: 0,
-          body: { 
+          body: {
             query: {
               bool: {
                 filter: [],
@@ -151,12 +151,12 @@ module EsTractor
         @tractor.search opts
       end
 
-      def test_search_with_sort_arg 
+      def test_search_with_sort_arg
         opts = { sort: [:some_field] }
         exp = {
           from: 0,
           size: 0,
-          body: { 
+          body: {
             query: {
               bool: {
                 filter: [],
