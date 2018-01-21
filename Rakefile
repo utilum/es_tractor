@@ -14,10 +14,10 @@ Hoe.spec 'es_tractor' do
   require_ruby_version '~> 2.0'
   extra_deps << ['elasticsearch', '~> 6.0']
 
-  extra_dev_deps << ['hoe-yard', '~> 0.1', '>=0.1.3']
-  extra_dev_deps << ['minitest', '~> 5.11', '>=5.11.1']
-  extra_dev_deps << ['mocha', '~> 1.3', '>=1.3.0']
-  extra_dev_deps << ['pry', '~> 0.11.3']
+  extra_dev_deps << ['hoe-yard', '~> 0.1', '>= 0.1.3']
+  extra_dev_deps << ['minitest', '~> 5.11', '>= 5.11.1']
+  extra_dev_deps << ['mocha', '~> 1.3', '>= 1.3.0']
+  extra_dev_deps << ['pry', '~> 0.11', '>= 0.11.3']
 end
 
 namespace :es_tractor do
