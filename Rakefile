@@ -12,12 +12,12 @@ Hoe.spec 'es_tractor' do
   license 'MIT'
 
   require_ruby_version '~> 2.0'
-  extra_deps << ['elasticsearch', '~> 5.0', '>= 5.0.4']
+  extra_deps << ['elasticsearch', '~> 6.0']
 
   extra_dev_deps << ['hoe-yard', '~> 0.1', '>=0.1.3']
-  extra_dev_deps << ['minitest', '~> 5.10', '>=5.10.3']
+  extra_dev_deps << ['minitest', '~> 5.11', '>=5.11.1']
   extra_dev_deps << ['mocha', '~> 1.3', '>=1.3.0']
-  extra_dev_deps << ['pry', '~> 0.10.4']
+  extra_dev_deps << ['pry', '~> 0.11.3']
 end
 
 namespace :es_tractor do
