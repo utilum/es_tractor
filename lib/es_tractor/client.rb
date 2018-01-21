@@ -9,11 +9,11 @@ module EsTractor
   class Client
     # @example
     #   'my_index'
-    ELASTICSEARCH_INDEX = ENV['ES_TRACTOR_ELASTICSEARCH_INDEX']
+    ELASTICSEARCH_INDEX ||= ENV['ES_TRACTOR_ELASTICSEARCH_INDEX']
 
     # @example
     #   'example.com:9200'
-    ELASTICSEARCH_HOST = ENV['ES_TRACTOR_ELASTICSEARCH_HOST']
+    ELASTICSEARCH_HOST ||= ENV['ES_TRACTOR_ELASTICSEARCH_HOST']
 
     # @attr_reader [Elasticsearch::Client] client to search with.
     attr_reader :client
