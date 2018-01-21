@@ -7,6 +7,8 @@ rdoc :: http://www.rubydoc.info/gems/es_tractor
 
 == DESCRIPTION:
 
+Just to search, you know, Elasticsearch.
+
 Minimal, simple, DRY DSL for searching Elasticsearch.
 
 Takes one shallow hash argument and translates it to an elaborate one passed
@@ -45,12 +47,15 @@ includes the edges:
   filters and aggregations.
 
 * TODO:
-  * Aggregations:
+  * Add aggregations:
     * Bucket
     * Nesting
     * Optional parameters
   * Add Search APIs:
     * Scroll
+  * Tests:
+    * Integration against an Elasticsearch cluster
+    * Integration against current and previous Elasticsearch major versions
   * Extraction: Aggregation to flat records (separate project?).
 
 == SYNOPSIS:
